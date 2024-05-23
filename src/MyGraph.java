@@ -1,4 +1,6 @@
 import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class MyGraph {
     private int V, E;
@@ -19,6 +21,7 @@ public class MyGraph {
 
     public void dfs() {
         boolean[] visited = new boolean[V];
+        System.out.print("Depth First Search: ");
         for (int v = 0; v < V; v++) {
             if (!visited[v]) {
                 visitNode(v, visited);
@@ -31,6 +34,26 @@ public class MyGraph {
         for(int w = 0; w < adj[v].size(); w++) {
             if(!visited [adj[v].get(w)])
                 visitNode(adj[v].get(w), visited);
+        }
+    }
+
+
+    public void bfs(int start) {
+        boolean[] visited = new boolean[V];
+        Queue<Integer> q = new LinkedList<>();
+        q.add(start);
+        System.out.print("Breadth First Search: ");
+        while (!q.isEmpty()){
+            int u = q.poll();
+            visited[u] = true;
+            System.out.print(u + " ");
+
+            for(int w = 0; w < adj[u].size(); w++) {
+                if(!visited[adj[u].get(w)]) {
+                    visited[adj[u].get(w)] = true;
+                    q.add(adj[u].get(w));
+                }
+            }
         }
     }
 
@@ -55,8 +78,9 @@ G: F B*/
         g.addEdge(4, 5);
         g.addEdge(5, 6);
 
-        System.out.println();
         g.dfs();
+        System.out.println();
+        g.bfs(0);
     }
 }
 
